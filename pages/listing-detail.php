@@ -13,6 +13,22 @@ $totalBids = 0;
 $isSaved = false;
 $allBids = [];
 $errorMessage = '';
+$successMessage = '';
+$infoMessage = '';
+
+// Standardized feedback from previous actions
+if (isset($_SESSION['success_message'])) {
+    $successMessage = $_SESSION['success_message'];
+    unset($_SESSION['success_message']);
+}
+if (isset($_SESSION['error_message'])) {
+    $errorMessage = $_SESSION['error_message'];
+    unset($_SESSION['error_message']);
+}
+if (isset($_SESSION['info_message'])) {
+    $infoMessage = $_SESSION['info_message'];
+    unset($_SESSION['info_message']);
+}
 
 if ($listingId <= 0) {
     header('Location: /pages/listings.php');
@@ -157,8 +173,40 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <main class="container py-5">
+    <?php if ($successMessage !== ''): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo $successMessage; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                showToast('success', '<?php echo addslashes($successMessage); ?>');
+            }, 100);
+        </script>
+    <?php endif; ?>
+
     <?php if ($errorMessage !== ''): ?>
-        <div class="alert alert-danger"><?php echo $errorMessage; ?></div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo $errorMessage; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                showToast('error', '<?php echo addslashes($errorMessage); ?>');
+            }, 100);
+        </script>
+    <?php endif; ?>
+
+    <?php if ($infoMessage !== ''): ?>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <?php echo $infoMessage; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                showToast('success', '<?php echo addslashes($infoMessage); ?>');
+            }, 100);
+        </script>
     <?php endif; ?>
 
     <?php if ($listing): ?>

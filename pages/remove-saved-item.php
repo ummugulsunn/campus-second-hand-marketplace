@@ -25,13 +25,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $deleteStmt->bindValue(':listing_id', $listingId, PDO::PARAM_INT);
             $deleteStmt->execute();
 
+            // Check if any row was actually deleted
+            if ($deleteStmt->rowCount() > 0) {
+                // Standardized success feedback
+                $_SESSION['success_message'] = 'Item removed from your wishlist.';
+            } else {
+                $_SESSION['error_message'] = 'Item not found in your wishlist.';
+            }
+
             // Check if redirect should go back to listing detail
             if (isset($_POST['redirect']) && $_POST['redirect'] === 'detail') {
                 $redirectUrl = '/pages/listing-detail.php?id=' . $listingId;
             }
         } catch (PDOException $e) {
-            // Silent fail or log error
+            $_SESSION['error_message'] = 'Failed to remove item: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
         }
+    } else {
+        $_SESSION['error_message'] = 'Invalid listing ID.';
     }
 }
 

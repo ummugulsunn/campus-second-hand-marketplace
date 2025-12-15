@@ -37,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['listing_id'])) {
             $deleteStmt->bindValue(':seller_id', $_SESSION['user_id'], PDO::PARAM_INT);
             $deleteStmt->execute();
 
-            // Set success message in session
-            $_SESSION['delete_success'] = 'Listing deleted successfully.';
+            // Standardized success feedback
+            $_SESSION['success_message'] = 'Listing deleted successfully.';
 
             // Option 2: Hard delete (uncomment if you want to permanently delete)
             // Note: This may fail due to foreign key constraints if there are bids/saved items

@@ -9,6 +9,13 @@ startSession();
 $dbStatusMessage = '';
 $featuredListings = [];
 $platformStats = [];
+$successMessage = '';
+
+// Check for success message from session
+if (isset($_SESSION['success_message'])) {
+    $successMessage = $_SESSION['success_message'];
+    unset($_SESSION['success_message']);
+}
 
 try {
     $healthCheckSql = <<<SQL
@@ -55,6 +62,18 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <main class="container py-5">
+    <?php if ($successMessage !== ''): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo $successMessage; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                showToast('success', '<?php echo addslashes($successMessage); ?>');
+            }, 100);
+        </script>
+    <?php endif; ?>
+    
     <section class="hero mb-5">
         <div class="row align-items-center">
             <div class="col-lg-7">

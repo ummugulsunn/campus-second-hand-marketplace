@@ -36,10 +36,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $insertStmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
                 $insertStmt->bindValue(':listing_id', $listingId, PDO::PARAM_INT);
                 $insertStmt->execute();
+
+                // Standardized success feedback
+                $_SESSION['success_message'] = 'Item saved to your wishlist.';
+            } else {
+                $_SESSION['info_message'] = 'Item is already in your wishlist.';
             }
         } catch (PDOException $e) {
-            // Silent fail or log error
+            $_SESSION['error_message'] = 'Failed to save item: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
         }
+    } else {
+        $_SESSION['error_message'] = 'Invalid listing ID.';
     }
 }
 

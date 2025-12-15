@@ -90,8 +90,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errors)) {
             $insertMessageStmt->bindValue(':receiver_id', $toUserId, PDO::PARAM_INT);
             $insertMessageStmt->execute();
 
-            $successMessage = 'Message sent successfully! Redirecting...';
-            header('Refresh: 2; URL=/pages/messages.php');
+            // Standardized success feedback: store message in session and redirect
+            $_SESSION['success_message'] = 'Message sent successfully!';
+            header('Location: /pages/messages.php');
+            exit;
         } catch (PDOException $e) {
             $errors[] = 'Failed to send message: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
         }
@@ -109,17 +111,29 @@ require_once __DIR__ . '/../includes/header.php';
                     <h3 class="card-title mb-4">Send Message</h3>
 
                     <?php if (!empty($errors)): ?>
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <?php foreach ($errors as $error): ?>
                                 <div><?php echo $error; ?></div>
                             <?php endforeach; ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                        <script>
+                            setTimeout(function() {
+                                showToast('error', '<?php echo addslashes(implode(' ', $errors)); ?>');
+                            }, 100);
+                        </script>
                     <?php endif; ?>
 
                     <?php if ($successMessage !== ''): ?>
-                        <div class="alert alert-success">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <?php echo $successMessage; ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                        <script>
+                            setTimeout(function() {
+                                showToast('success', '<?php echo addslashes($successMessage); ?>');
+                            }, 100);
+                        </script>
                     <?php endif; ?>
 
                     <?php if (empty($successMessage)): ?>

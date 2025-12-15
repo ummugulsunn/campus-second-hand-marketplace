@@ -90,17 +90,29 @@ require_once __DIR__ . '/../includes/header.php';
                     <h3 class="card-title mb-4">Create New Listing</h3>
 
                     <?php if (!empty($errors)): ?>
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <?php foreach ($errors as $error): ?>
                                 <div><?php echo $error; ?></div>
                             <?php endforeach; ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                        <script>
+                            setTimeout(function() {
+                                showToast('error', '<?php echo addslashes(implode(' ', $errors)); ?>');
+                            }, 100);
+                        </script>
                     <?php endif; ?>
 
                     <?php if ($successMessage !== ''): ?>
-                        <div class="alert alert-success">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <?php echo $successMessage; ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                        <script>
+                            setTimeout(function() {
+                                showToast('success', '<?php echo addslashes($successMessage); ?>');
+                            }, 100);
+                        </script>
                     <?php endif; ?>
 
                     <form method="post" action="/pages/add-listing.php" id="addListingForm" class="needs-validation" data-autosave novalidate>

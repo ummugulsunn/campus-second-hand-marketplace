@@ -30,8 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $insertComplaintStmt->bindValue(':reporter_id', $_SESSION['user_id'], PDO::PARAM_INT);
             $insertComplaintStmt->execute();
 
-            $successMessage = 'Complaint submitted successfully! Our moderators will review it soon.';
-            header('Refresh: 3; URL=/pages/listings.php');
+            $_SESSION['success_message'] = 'Complaint submitted successfully! Our moderators will review it soon.';
+            header('Location: /pages/listings.php');
+            exit;
         } catch (PDOException $e) {
             $errors[] = 'Failed to submit complaint: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
         }
@@ -53,17 +54,29 @@ require_once __DIR__ . '/../includes/header.php';
                     </p>
 
                     <?php if (!empty($errors)): ?>
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <?php foreach ($errors as $error): ?>
                                 <div><?php echo $error; ?></div>
                             <?php endforeach; ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                        <script>
+                            setTimeout(function() {
+                                showToast('error', '<?php echo addslashes(implode(' ', $errors)); ?>');
+                            }, 100);
+                        </script>
                     <?php endif; ?>
 
                     <?php if ($successMessage !== ''): ?>
-                        <div class="alert alert-success">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <?php echo $successMessage; ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                        <script>
+                            setTimeout(function() {
+                                showToast('success', '<?php echo addslashes($successMessage); ?>');
+                            }, 100);
+                        </script>
                     <?php endif; ?>
 
                     <?php if (empty($successMessage)): ?>

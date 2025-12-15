@@ -9,6 +9,13 @@ requireLogin();
 
 $messages = [];
 $errorMessage = '';
+$successMessage = '';
+
+// Standardized success feedback from previous actions (e.g., send-message)
+if (isset($_SESSION['success_message'])) {
+    $successMessage = $_SESSION['success_message'];
+    unset($_SESSION['success_message']);
+}
 
 try {
     // Fetch all messages (sent and received) for the current user
@@ -46,6 +53,18 @@ require_once __DIR__ . '/../includes/header.php';
         <h2>My Messages</h2>
         <a href="/pages/send-message.php" class="btn btn-primary">+ New Message</a>
     </div>
+
+    <?php if ($successMessage !== ''): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo $successMessage; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                showToast('success', '<?php echo addslashes($successMessage); ?>');
+            }, 100);
+        </script>
+    <?php endif; ?>
 
     <?php if ($errorMessage !== ''): ?>
         <div class="alert alert-danger"><?php echo $errorMessage; ?></div>

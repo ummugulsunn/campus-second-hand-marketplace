@@ -9,6 +9,22 @@ requireLogin();
 
 $savedItems = [];
 $errorMessage = '';
+$successMessage = '';
+$infoMessage = '';
+
+// Check for messages from session
+if (isset($_SESSION['success_message'])) {
+    $successMessage = $_SESSION['success_message'];
+    unset($_SESSION['success_message']);
+}
+if (isset($_SESSION['error_message'])) {
+    $errorMessage = $_SESSION['error_message'];
+    unset($_SESSION['error_message']);
+}
+if (isset($_SESSION['info_message'])) {
+    $infoMessage = $_SESSION['info_message'];
+    unset($_SESSION['info_message']);
+}
 
 try {
     // Fetch saved items with listing details
@@ -45,8 +61,40 @@ require_once __DIR__ . '/../includes/header.php';
 <main class="container py-5">
     <h2 class="mb-4">My Saved Items</h2>
 
+    <?php if ($successMessage !== ''): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo $successMessage; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                showToast('success', '<?php echo addslashes($successMessage); ?>');
+            }, 100);
+        </script>
+    <?php endif; ?>
+
     <?php if ($errorMessage !== ''): ?>
-        <div class="alert alert-danger"><?php echo $errorMessage; ?></div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo $errorMessage; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                showToast('error', '<?php echo addslashes($errorMessage); ?>');
+            }, 100);
+        </script>
+    <?php endif; ?>
+
+    <?php if ($infoMessage !== ''): ?>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <?php echo $infoMessage; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                showToast('success', '<?php echo addslashes($infoMessage); ?>');
+            }, 100);
+        </script>
     <?php endif; ?>
 
     <?php if (empty($savedItems)): ?>

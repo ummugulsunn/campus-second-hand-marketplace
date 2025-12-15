@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     (int) $user['RoleID'],
                     (string) $user['RoleName']
                 );
+                $_SESSION['success_message'] = 'Welcome back, ' . htmlspecialchars($user['Name'], ENT_QUOTES, 'UTF-8') . '!';
                 header('Location: /index.php');
                 exit;
             } else {
@@ -57,9 +58,15 @@ require_once __DIR__ . '/../includes/header.php';
                     <h3 class="card-title mb-4 text-center">Welcome back</h3>
 
                     <?php if ($errorMessage !== ''): ?>
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <?php echo $errorMessage; ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                        <script>
+                            setTimeout(function() {
+                                showToast('error', '<?php echo addslashes($errorMessage); ?>');
+                            }, 100);
+                        </script>
                     <?php endif; ?>
 
                     <form method="post" action="/pages/login.php" class="needs-validation" novalidate>

@@ -15,10 +15,17 @@ $usersCanReview = [];
 $errorMessage = '';
 $successMessage = '';
 
-// Check for delete success message
-if (isset($_SESSION['delete_success'])) {
-    $successMessage = $_SESSION['delete_success'];
-    unset($_SESSION['delete_success']);
+// Check for generic success message (e.g., review submitted)
+if (isset($_SESSION['success_message'])) {
+    $successMessage = $_SESSION['success_message'];
+    unset($_SESSION['success_message']);
+}
+
+// Check for delete success message (legacy key)
+// Check for success message from session
+if (isset($_SESSION['success_message'])) {
+    $successMessage = $_SESSION['success_message'];
+    unset($_SESSION['success_message']);
 }
 
 try {
@@ -145,10 +152,23 @@ require_once __DIR__ . '/../includes/header.php';
             <?php echo $successMessage; ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+        <script>
+            setTimeout(function() {
+                showToast('success', '<?php echo addslashes($successMessage); ?>');
+            }, 100);
+        </script>
     <?php endif; ?>
 
     <?php if ($errorMessage !== ''): ?>
-        <div class="alert alert-danger"><?php echo $errorMessage; ?></div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo $errorMessage; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                showToast('error', '<?php echo addslashes($errorMessage); ?>');
+            }, 100);
+        </script>
     <?php endif; ?>
 
     <!-- User Info Card -->

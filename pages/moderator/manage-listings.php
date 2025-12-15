@@ -78,11 +78,27 @@ require_once __DIR__ . '/../../includes/header.php';
     <h2 class="mb-4">Manage Listings</h2>
 
     <?php if ($errorMessage !== ''): ?>
-        <div class="alert alert-danger"><?php echo $errorMessage; ?></div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo $errorMessage; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                showToast('error', '<?php echo addslashes($errorMessage); ?>');
+            }, 100);
+        </script>
     <?php endif; ?>
 
     <?php if ($successMessage !== ''): ?>
-        <div class="alert alert-success"><?php echo $successMessage; ?></div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo $successMessage; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                showToast('success', '<?php echo addslashes($successMessage); ?>');
+            }, 100);
+        </script>
     <?php endif; ?>
 
     <?php if (empty($listings)): ?>

@@ -18,6 +18,12 @@ $roles = [];
 $errorMessage = '';
 $successMessage = '';
 
+// Standardized success feedback from session (e.g., role updates)
+if (isset($_SESSION['success_message'])) {
+    $successMessage = $_SESSION['success_message'];
+    unset($_SESSION['success_message']);
+}
+
 // Handle role update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'], $_POST['new_role_id'])) {
     $userId = (int)$_POST['user_id'];
@@ -39,7 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'], $_POST['ne
             $updateRoleStmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
             $updateRoleStmt->execute();
 
-            $successMessage = 'User role updated successfully.';
+            $_SESSION['success_message'] = 'User role updated successfully.';
+            header('Location: /pages/admin/users.php');
+            exit;
         } catch (PDOException $e) {
             $errorMessage = 'Failed to update role: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
         }
@@ -80,12 +88,28 @@ require_once __DIR__ . '/../../includes/header.php';
         <a href="/pages/admin/dashboard.php" class="btn btn-outline-secondary">← Back to Dashboard</a>
     </div>
 
-    <?php if ($errorMessage !== ''): ?>
-        <div class="alert alert-danger"><?php echo $errorMessage; ?></div>
+    <?php if ($successMessage !== ''): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo $successMessage; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                showToast('success', '<?php echo addslashes($successMessage); ?>');
+            }, 100);
+        </script>
     <?php endif; ?>
 
-    <?php if ($successMessage !== ''): ?>
-        <div class="alert alert-success"><?php echo $successMessage; ?></div>
+    <?php if ($errorMessage !== ''): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo $errorMessage; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+            setTimeout(function() {
+                showToast('error', '<?php echo addslashes($errorMessage); ?>');
+            }, 100);
+        </script>
     <?php endif; ?>
 
     <div class="table-responsive">

@@ -14,7 +14,7 @@ $errors = [];
 $successMessage = '';
 
 if ($listingId <= 0) {
-    header('Location: /pages/profile.php');
+    header('Location: /campus-marketplace/pages/profile.php');
     exit;
 }
 
@@ -40,13 +40,13 @@ try {
     $listing = $listingStmt->fetch();
 
     if (!$listing) {
-        header('Location: /pages/profile.php');
+        header('Location: /campus-marketplace/pages/profile.php');
         exit;
     }
 
     // Verify ownership
     if ((int)$listing['SellerID'] !== (int)$_SESSION['user_id']) {
-        header('Location: /pages/profile.php');
+        header('Location: /campus-marketplace/pages/profile.php');
         exit;
     }
 
@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errors)) {
             $updateStmt->execute();
 
             $_SESSION['success_message'] = 'Listing updated successfully!';
-            header('Location: /pages/profile.php');
+            header('Location: /campus-marketplace/pages/profile.php');
             exit;
         } catch (PDOException $e) {
             $errors[] = 'Failed to update listing: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
@@ -152,7 +152,7 @@ require_once __DIR__ . '/../includes/header.php';
                     <?php endif; ?>
 
                     <?php if ($listing && empty($successMessage)): ?>
-                        <form method="post" action="/pages/edit-listing.php?id=<?php echo $listingId; ?>" novalidate>
+                        <form method="post" action="<?= base_url('/pages/edit-listing.php?id=' . $listingId) ?>" novalidate>
                             <div class="mb-3">
                                 <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="title" name="title" required 
@@ -200,7 +200,7 @@ require_once __DIR__ . '/../includes/header.php';
                             </div>
 
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a href="/pages/profile.php" class="btn btn-secondary">Cancel</a>
+                                <a href="/campus-marketplace/pages/profile.php" class="btn btn-secondary">Cancel</a>
                                 <button type="submit" class="btn btn-primary">Update Listing</button>
                             </div>
                         </form>

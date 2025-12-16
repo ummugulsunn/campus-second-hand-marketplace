@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     (string) $user['RoleName']
                 );
                 $_SESSION['success_message'] = 'Welcome back, ' . htmlspecialchars($user['Name'], ENT_QUOTES, 'UTF-8') . '!';
-                header('Location: /index.php');
+                header('Location: /campus-marketplace/index.php');
                 exit;
             } else {
                 $errorMessage = 'Invalid email or password.';
@@ -69,7 +69,7 @@ require_once __DIR__ . '/../includes/header.php';
                         </script>
                     <?php endif; ?>
 
-                    <form method="post" action="/pages/login.php" class="needs-validation" novalidate>
+                    <form method="post" action="<?= base_url('/pages/login.php') ?>" class="needs-validation" novalidate>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
                             <input type="email" class="form-control" id="email" name="email" required autofocus
@@ -95,7 +95,7 @@ require_once __DIR__ . '/../includes/header.php';
                     </form>
 
                     <p class="mt-3 text-center">
-                        New here? <a href="/pages/register.php">Create an account</a>.
+                        New here? <a href="/campus-marketplace/pages/register.php">Create an account</a>.
                     </p>
                 </div>
             </div>

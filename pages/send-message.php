@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errors)) {
 
             // Standardized success feedback: store message in session and redirect
             $_SESSION['success_message'] = 'Message sent successfully!';
-            header('Location: /pages/messages.php');
+            header('Location: /campus-marketplace/pages/messages.php');
             exit;
         } catch (PDOException $e) {
             $errors[] = 'Failed to send message: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
@@ -143,7 +143,7 @@ require_once __DIR__ . '/../includes/header.php';
                             </div>
                         <?php endif; ?>
 
-                        <form method="post" action="/pages/send-message.php" novalidate>
+                        <form method="post" action="<?= base_url('/pages/send-message.php') ?>" novalidate>
                             <?php if ($receiver): ?>
                                 <input type="hidden" name="to_user_id" value="<?php echo $receiver['UserID']; ?>">
                                 <div class="mb-3">
@@ -164,7 +164,7 @@ require_once __DIR__ . '/../includes/header.php';
                             </div>
 
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a href="/pages/messages.php" class="btn btn-secondary">Cancel</a>
+                                <a href="/campus-marketplace/pages/messages.php" class="btn btn-secondary">Cancel</a>
                                 <?php if ($receiver && empty($errors)): ?>
                                     <button type="submit" class="btn btn-primary">Send Message</button>
                                 <?php endif; ?>

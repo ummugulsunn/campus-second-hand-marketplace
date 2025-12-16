@@ -140,7 +140,7 @@ require_once __DIR__ . '/../includes/header.php';
     <!-- Breadcrumbs -->
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/campus-marketplace/">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">My Profile</li>
         </ol>
     </nav>
@@ -201,17 +201,17 @@ require_once __DIR__ . '/../includes/header.php';
     <!-- Quick Links -->
     <div class="row g-3 mb-4">
         <div class="col-md-3">
-            <a href="/pages/my-bids.php" class="btn btn-outline-primary w-100">My Bids</a>
+            <a href="/campus-marketplace/pages/my-bids.php" class="btn btn-outline-primary w-100">My Bids</a>
         </div>
         <div class="col-md-3">
-            <a href="/pages/messages.php" class="btn btn-outline-primary w-100">Messages</a>
+            <a href="/campus-marketplace/pages/messages.php" class="btn btn-outline-primary w-100">Messages</a>
         </div>
         <div class="col-md-3">
-            <a href="/pages/saved-items.php" class="btn btn-outline-primary w-100">Saved Items</a>
+            <a href="/campus-marketplace/pages/saved-items.php" class="btn btn-outline-primary w-100">Saved Items</a>
         </div>
         <?php if (hasRole('Student')): ?>
             <div class="col-md-3">
-                <a href="/pages/add-listing.php" class="btn btn-primary w-100">+ Add Listing</a>
+                <a href="/campus-marketplace/pages/add-listing.php" class="btn btn-primary w-100">+ Add Listing</a>
             </div>
         <?php endif; ?>
     </div>
@@ -264,7 +264,7 @@ require_once __DIR__ . '/../includes/header.php';
                     <?php foreach ($usersCanReview as $reviewableUser): ?>
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             <span><?php echo htmlspecialchars($reviewableUser['Name'], ENT_QUOTES, 'UTF-8'); ?></span>
-                            <a href="/pages/leave-review.php?reviewee_id=<?php echo $reviewableUser['UserID']; ?>" 
+                            <a href="/campus-marketplace/pages/leave-review.php?reviewee_id=<?php echo $reviewableUser['UserID']; ?>" 
                                class="btn btn-sm btn-primary">Leave Review</a>
                         </div>
                     <?php endforeach; ?>
@@ -284,7 +284,7 @@ require_once __DIR__ . '/../includes/header.php';
                     <div style="font-size: 3rem; opacity: 0.5;">📦</div>
                     <p class="text-muted mb-2">You haven't created any listings yet.</p>
                     <?php if (hasRole('Student')): ?>
-                        <a href="/pages/add-listing.php" class="btn btn-sm btn-primary">Create Your First Listing</a>
+                        <a href="/campus-marketplace/pages/add-listing.php" class="btn btn-sm btn-primary">Create Your First Listing</a>
                     <?php endif; ?>
                 </div>
             <?php else: ?>
@@ -313,11 +313,11 @@ require_once __DIR__ . '/../includes/header.php';
                                     </td>
                                     <td><?php echo $listing['BidCount']; ?></td>
                                     <td>
-                                        <a href="/pages/listing-detail.php?id=<?php echo $listing['ListingID']; ?>" 
+                                        <a href="/campus-marketplace/pages/listing-detail.php?id=<?php echo $listing['ListingID']; ?>" 
                                            class="btn btn-sm btn-outline-primary">View</a>
-                                        <a href="/pages/edit-listing.php?id=<?php echo $listing['ListingID']; ?>" 
+                                        <a href="/campus-marketplace/pages/edit-listing.php?id=<?php echo $listing['ListingID']; ?>" 
                                            class="btn btn-sm btn-outline-secondary">Edit</a>
-                                        <form method="post" action="/pages/delete-listing.php" class="d-inline" 
+                                        <form method="post" action="<?= base_url('/pages/delete-listing.php') ?>" class="d-inline" 
                                               onsubmit="return confirm('Are you sure you want to delete &quot;<?php echo htmlspecialchars($listing['Title'], ENT_QUOTES, 'UTF-8'); ?>&quot;?\n\nThis listing will be marked as removed and will no longer appear in your active listings.');">
                                             <input type="hidden" name="listing_id" value="<?php echo $listing['ListingID']; ?>">
                                             <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>

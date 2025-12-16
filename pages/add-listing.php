@@ -9,7 +9,7 @@ requireLogin();
 
 // Only Students can create listings
 if (!hasRole('Student')) {
-    header('Location: /index.php');
+    header('Location: /campus-marketplace/index.php');
     exit;
 }
 
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $insertSql = <<<SQL
             INSERT INTO Product_Listing (Title, Description, Price, Status, SellerID, CategoryID)
-            VALUES (:title, :description, :price, 'Active', :seller_id, :category_id);
+            VALUES (:title, :description, :price, 'Pending', :seller_id, :category_id);
             SQL;
 
             $insertStmt = $pdo->prepare($insertSql);
@@ -70,8 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $insertStmt->bindValue(':category_id', (int)$categoryId, PDO::PARAM_INT);
             $insertStmt->execute();
 
-            $_SESSION['success_message'] = 'Listing created successfully!';
-            header('Location: /pages/listings.php');
+            $_SESSION['success_message'] = 'Listing created successfully! Your listing is pending moderator approval and will be visible once approved.';
+            header('Location: /campus-marketplace/pages/profile.php');
             exit;
         } catch (PDOException $e) {
             $errors[] = 'Failed to create listing: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
@@ -115,7 +115,7 @@ require_once __DIR__ . '/../includes/header.php';
                         </script>
                     <?php endif; ?>
 
-                    <form method="post" action="/pages/add-listing.php" id="addListingForm" class="needs-validation" data-autosave novalidate>
+                    <form method="post" action="<?= base_url('/pages/add-listing.php') ?>" id="addListingForm" class="needs-validation" data-autosave novalidate>
                         <div class="mb-3">
                             <label for="title" class="form-label">Listing Title <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="title" name="title" required minlength="5" maxlength="200"
@@ -169,7 +169,7 @@ require_once __DIR__ . '/../includes/header.php';
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="/pages/listings.php" class="btn btn-outline-secondary">Cancel</a>
+                            <a href="/campus-marketplace/pages/listings.php" class="btn btn-outline-secondary">Cancel</a>
                             <button type="submit" class="btn btn-primary px-4">
                                 <strong>Create Listing</strong>
                             </button>

@@ -100,7 +100,7 @@ require_once __DIR__ . '/../includes/header.php';
             <div class="empty-state-icon">🔔</div>
             <h4>No Notifications</h4>
             <p>You're all caught up! We'll notify you about new bids, messages, and listing updates.</p>
-            <a href="/pages/listings.php" class="btn btn-primary">Browse Listings</a>
+            <a href="/campus-marketplace/pages/listings.php" class="btn btn-primary">Browse Listings</a>
         </div>
     <?php else: ?>
         <div class="list-group">

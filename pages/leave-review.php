@@ -13,7 +13,7 @@ $errors = [];
 $successMessage = '';
 
 if ($revieweeId <= 0 || $revieweeId === (int)$_SESSION['user_id']) {
-    header('Location: /pages/listings.php');
+    header('Location: /campus-marketplace/pages/listings.php');
     exit;
 }
 
@@ -32,7 +32,7 @@ try {
     $reviewee = $userStmt->fetch();
 
     if (!$reviewee) {
-        header('Location: /pages/listings.php');
+        header('Location: /campus-marketplace/pages/listings.php');
         exit;
     }
 
@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errors)) {
 
             // Standardized success feedback: store in session and redirect
             $_SESSION['success_message'] = 'Review submitted successfully!';
-            header('Location: /pages/profile.php');
+            header('Location: /campus-marketplace/pages/profile.php');
             exit;
         } catch (PDOException $e) {
             $errors[] = 'Failed to submit review: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
@@ -185,14 +185,14 @@ require_once __DIR__ . '/../includes/header.php';
                             </p>
                         </div>
                         <div class="d-grid">
-                            <a href="/pages/listings.php" class="btn btn-primary">Browse Listings</a>
+                            <a href="/campus-marketplace/pages/listings.php" class="btn btn-primary">Browse Listings</a>
                         </div>
                     <?php elseif ($reviewee && empty($successMessage)): ?>
                         <div class="mb-4">
                             <p><strong>Reviewing:</strong> <?php echo htmlspecialchars($reviewee['Name'], ENT_QUOTES, 'UTF-8'); ?></p>
                         </div>
 
-                        <form method="post" action="/pages/leave-review.php?for=<?php echo $revieweeId; ?>" class="needs-validation" novalidate>
+                        <form method="post" action="<?= base_url('/pages/leave-review.php?for=' . $revieweeId) ?>" class="needs-validation" novalidate>
                             <input type="hidden" name="rating" id="ratingValue" value="<?php echo isset($rating) ? $rating : ''; ?>" required>
                             
                             <div class="mb-4">
@@ -290,7 +290,7 @@ require_once __DIR__ . '/../includes/header.php';
                             </div>
 
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a href="/pages/listings.php" class="btn btn-secondary">Cancel</a>
+                                <a href="/campus-marketplace/pages/listings.php" class="btn btn-secondary">Cancel</a>
                                 <button type="submit" class="btn btn-primary">Submit Review</button>
                             </div>
                         </form>

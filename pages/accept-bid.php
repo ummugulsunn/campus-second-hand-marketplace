@@ -12,7 +12,7 @@ $action = isset($_GET['action']) && in_array($_GET['action'], ['accept', 'reject
 
 if ($bidId <= 0 || $action === '') {
     $_SESSION['error_message'] = 'Invalid request.';
-    header('Location: /pages/profile.php');
+    header('Location: /campus-marketplace/pages/profile.php');
     exit;
 }
 
@@ -41,13 +41,13 @@ try {
     
     if (!$bid) {
         $_SESSION['error_message'] = 'Bid not found.';
-        header('Location: /pages/profile.php');
+        header('Location: /campus-marketplace/pages/profile.php');
         exit;
     }
     
     if ((int)$bid['SellerID'] !== $_SESSION['user_id']) {
         $_SESSION['error_message'] = 'You are not authorized to manage this bid.';
-        header('Location: /pages/profile.php');
+        header('Location: /campus-marketplace/pages/profile.php');
         exit;
     }
     
@@ -120,6 +120,6 @@ try {
     $_SESSION['error_message'] = 'Failed to process bid: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
 }
 
-header('Location: /pages/listing-detail.php?id=' . $bid['ListingID']);
+header('Location: /campus-marketplace/pages/listing-detail.php?id=' . $bid['ListingID']);
 exit;
 

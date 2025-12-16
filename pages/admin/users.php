@@ -9,7 +9,7 @@ requireLogin();
 
 // Only Admins can access
 if (!hasRole('Admin')) {
-    header('Location: /index.php');
+    header('Location: /campus-marketplace/index.php');
     exit;
 }
 
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'], $_POST['ne
             $updateRoleStmt->execute();
 
             $_SESSION['success_message'] = 'User role updated successfully.';
-            header('Location: /pages/admin/users.php');
+            header('Location: /campus-marketplace/pages/admin/users.php');
             exit;
         } catch (PDOException $e) {
             $errorMessage = 'Failed to update role: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
@@ -85,7 +85,7 @@ require_once __DIR__ . '/../../includes/header.php';
 <main class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>User Management</h2>
-        <a href="/pages/admin/dashboard.php" class="btn btn-outline-secondary">← Back to Dashboard</a>
+        <a href="/campus-marketplace/pages/admin/dashboard.php" class="btn btn-outline-secondary">← Back to Dashboard</a>
     </div>
 
     <?php if ($successMessage !== ''): ?>
@@ -129,7 +129,7 @@ require_once __DIR__ . '/../../includes/header.php';
                     <tr>
                         <td><?php echo $user['UserID']; ?></td>
                         <td>
-                            <a href="/pages/admin/user-detail.php?id=<?php echo $user['UserID']; ?>">
+                            <a href="/campus-marketplace/pages/admin/user-detail.php?id=<?php echo $user['UserID']; ?>">
                                 <?php echo htmlspecialchars($user['Name'], ENT_QUOTES, 'UTF-8'); ?>
                             </a>
                         </td>

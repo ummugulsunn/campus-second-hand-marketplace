@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+// Load application config (BASE_URL, base_url() helper)
+require_once __DIR__ . '/config.php';
+
 // PDO connection configuration for campus_marketplace database.
 $dbConfig = [
     'host'    => getenv('DB_HOST') ?: 'localhost',
@@ -11,8 +14,7 @@ $dbConfig = [
 ];
 
 $dsn = sprintf(
-    'mysql:host=%s;dbname=%s;charset=%s',
-    $dbConfig['host'],
+    'mysql:unix_socket=/tmp/mysql.sock;dbname=%s;charset=%s',
     $dbConfig['name'],
     $dbConfig['charset']
 );

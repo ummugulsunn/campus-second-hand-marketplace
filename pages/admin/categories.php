@@ -9,7 +9,7 @@ requireLogin();
 
 // Only Admins can access
 if (!hasRole('Admin')) {
-    header('Location: /index.php');
+    header('Location: /campus-marketplace/index.php');
     exit;
 }
 
@@ -21,29 +21,29 @@ $successMessage = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add') {
     $categoryName = cleanInput($_POST['category_name'] ?? '');
     
-    $validCategories = ['Books', 'Electronics', 'Furniture', 'Dorm Equipment'];
-    
     if ($categoryName === '') {
         $errorMessage = 'Category name is required.';
-    } elseif (!in_array($categoryName, $validCategories)) {
-        $errorMessage = 'Invalid category. Allowed: Books, Electronics, Furniture, Dorm Equipment.';
+    } elseif (strlen($categoryName) < 2) {
+        $errorMessage = 'Category name must be at least 2 characters long.';
+    } elseif (strlen($categoryName) > 50) {
+        $errorMessage = 'Category name must not exceed 50 characters.';
     } else {
         try {
-            // Check if category already exists
-            $checkSql = "SELECT CategoryID FROM Category WHERE CategoryName = :name LIMIT 1;";
+            // Check if category already exists (case-insensitive)
+            $checkSql = "SELECT CategoryID FROM Category WHERE LOWER(CategoryName) = LOWER(:name) LIMIT 1;";
             $checkStmt = $pdo->prepare($checkSql);
             $checkStmt->bindValue(':name', $categoryName, PDO::PARAM_STR);
             $checkStmt->execute();
             
             if ($checkStmt->fetch()) {
-                $errorMessage = 'Category already exists.';
+                $errorMessage = 'A category with this name already exists.';
             } else {
                 $insertSql = "INSERT INTO Category (CategoryName) VALUES (:name);";
                 $insertStmt = $pdo->prepare($insertSql);
                 $insertStmt->bindValue(':name', $categoryName, PDO::PARAM_STR);
                 $insertStmt->execute();
                 
-                $successMessage = 'Category added successfully!';
+                $successMessage = 'Category "' . htmlspecialchars($categoryName, ENT_QUOTES, 'UTF-8') . '" added successfully!';
             }
         } catch (PDOException $e) {
             $errorMessage = 'Failed to add category: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
@@ -56,21 +56,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $categoryId = (int)$_POST['category_id'];
     $newName = cleanInput($_POST['new_name'] ?? '');
     
-    $validCategories = ['Books', 'Electronics', 'Furniture', 'Dorm Equipment'];
-    
     if ($newName === '') {
         $errorMessage = 'Category name is required.';
-    } elseif (!in_array($newName, $validCategories)) {
-        $errorMessage = 'Invalid category. Allowed: Books, Electronics, Furniture, Dorm Equipment.';
+    } elseif (strlen($newName) < 2) {
+        $errorMessage = 'Category name must be at least 2 characters long.';
+    } elseif (strlen($newName) > 50) {
+        $errorMessage = 'Category name must not exceed 50 characters.';
     } else {
         try {
-            $updateSql = "UPDATE Category SET CategoryName = :name WHERE CategoryID = :id;";
-            $updateStmt = $pdo->prepare($updateSql);
-            $updateStmt->bindValue(':name', $newName, PDO::PARAM_STR);
-            $updateStmt->bindValue(':id', $categoryId, PDO::PARAM_INT);
-            $updateStmt->execute();
+            // Check if another category with this name already exists
+            $checkSql = "SELECT CategoryID FROM Category WHERE LOWER(CategoryName) = LOWER(:name) AND CategoryID != :id LIMIT 1;";
+            $checkStmt = $pdo->prepare($checkSql);
+            $checkStmt->bindValue(':name', $newName, PDO::PARAM_STR);
+            $checkStmt->bindValue(':id', $categoryId, PDO::PARAM_INT);
+            $checkStmt->execute();
             
-            $successMessage = 'Category updated successfully!';
+            if ($checkStmt->fetch()) {
+                $errorMessage = 'A category with this name already exists.';
+            } else {
+                $updateSql = "UPDATE Category SET CategoryName = :name WHERE CategoryID = :id;";
+                $updateStmt = $pdo->prepare($updateSql);
+                $updateStmt->bindValue(':name', $newName, PDO::PARAM_STR);
+                $updateStmt->bindValue(':id', $categoryId, PDO::PARAM_INT);
+                $updateStmt->execute();
+                
+                $successMessage = 'Category updated to "' . htmlspecialchars($newName, ENT_QUOTES, 'UTF-8') . '" successfully!';
+            }
         } catch (PDOException $e) {
             $errorMessage = 'Failed to update category: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
         }
@@ -132,7 +143,7 @@ require_once __DIR__ . '/../../includes/header.php';
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
                 + Add Category
             </button>
-            <a href="/pages/admin/dashboard.php" class="btn btn-outline-secondary">← Back to Dashboard</a>
+            <a href="/campus-marketplace/pages/admin/dashboard.php" class="btn btn-outline-secondary">← Back to Dashboard</a>
         </div>
     </div>
 
@@ -217,15 +228,16 @@ require_once __DIR__ . '/../../includes/header.php';
                 <div class="modal-body">
                     <input type="hidden" name="action" value="add">
                     <div class="mb-3">
-                        <label for="category_name" class="form-label">Category Name</label>
-                        <select class="form-select" id="category_name" name="category_name" required>
-                            <option value="">-- Select Category --</option>
-                            <option value="Books">Books</option>
-                            <option value="Electronics">Electronics</option>
-                            <option value="Furniture">Furniture</option>
-                            <option value="Dorm Equipment">Dorm Equipment</option>
-                        </select>
-                        <small class="text-muted">Only predefined categories are allowed per project requirements.</small>
+                        <label for="category_name" class="form-label">Category Name <span class="text-danger">*</span></label>
+                        <input type="text" 
+                               class="form-control" 
+                               id="category_name" 
+                               name="category_name" 
+                               required 
+                               minlength="2" 
+                               maxlength="50"
+                               placeholder="Enter category name (e.g., Sports, Clothing, Textbooks)">
+                        <small class="text-muted">💡 Create any category you need. Must be 2-50 characters.</small>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -250,14 +262,16 @@ require_once __DIR__ . '/../../includes/header.php';
                     <input type="hidden" name="action" value="edit">
                     <input type="hidden" name="category_id" id="edit_category_id">
                     <div class="mb-3">
-                        <label for="new_name" class="form-label">Category Name</label>
-                        <select class="form-select" id="new_name" name="new_name" required>
-                            <option value="">-- Select Category --</option>
-                            <option value="Books">Books</option>
-                            <option value="Electronics">Electronics</option>
-                            <option value="Furniture">Furniture</option>
-                            <option value="Dorm Equipment">Dorm Equipment</option>
-                        </select>
+                        <label for="new_name" class="form-label">Category Name <span class="text-danger">*</span></label>
+                        <input type="text" 
+                               class="form-control" 
+                               id="new_name" 
+                               name="new_name" 
+                               required 
+                               minlength="2" 
+                               maxlength="50"
+                               placeholder="Enter new category name">
+                        <small class="text-muted">💡 Must be 2-50 characters and unique.</small>
                     </div>
                 </div>
                 <div class="modal-footer">

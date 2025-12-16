@@ -24,6 +24,17 @@ if ($isLoggedIn && isset($_SESSION['user_id'])) {
         // Silently fail - notification badge is not critical
     }
 }
+
+// Count pending listings (for moderators/admins)
+$pendingListingsCount = 0;
+if (($isModerator || $isAdmin)) {
+    try {
+        $pendingSql = "SELECT COUNT(*) as count FROM Product_Listing WHERE Status = 'Pending';";
+        $pendingListingsCount = (int)$pdo->query($pendingSql)->fetch()['count'];
+    } catch (PDOException $e) {
+        // Silently fail
+    }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -33,12 +44,12 @@ if ($isLoggedIn && isset($_SESSION['user_id'])) {
     <title>Campus Second-Hand Marketplace</title>
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="<?= base_url('/assets/css/style.css') ?>" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="/">Campus Market</a>
+            <a class="navbar-brand fw-bold" href="<?= base_url('/') ?>">Campus Market</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -46,7 +57,7 @@ if ($isLoggedIn && isset($_SESSION['user_id'])) {
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        <a class="nav-link active" aria-current="page" href="<?= base_url('/') ?>">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#categories">Categories</a>
@@ -55,21 +66,29 @@ if ($isLoggedIn && isset($_SESSION['user_id'])) {
 
                 <div class="d-flex align-items-center gap-2">
                     <?php if ($isLoggedIn): ?>
-                        <a class="btn btn-outline-light btn-sm" href="/pages/listings.php">Browse</a>
+                        <a class="btn btn-outline-light btn-sm" href="<?= base_url('/pages/listings.php') ?>">Browse</a>
                         <?php if ($isStudent): ?>
-                            <a class="btn btn-warning btn-sm" href="/pages/add-listing.php">+ Listing</a>
+                            <a class="btn btn-warning btn-sm" href="<?= base_url('/pages/add-listing.php') ?>">+ Listing</a>
                         <?php endif; ?>
                         <?php if ($isModerator || $isAdmin): ?>
-                            <a class="btn btn-info btn-sm" href="/pages/moderator/complaints.php">Complaints</a>
-                            <a class="btn btn-info btn-sm" href="/pages/moderator/manage-listings.php">Manage</a>
+                            <a class="btn btn-info btn-sm" href="<?= base_url('/pages/moderator/complaints.php') ?>">Complaints</a>
+                            <a class="btn btn-info btn-sm position-relative" href="<?= base_url('/pages/moderator/manage-listings.php') ?>">
+                                Manage
+                                <?php if ($pendingListingsCount > 0): ?>
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">
+                                        <?= $pendingListingsCount ?>
+                                        <span class="visually-hidden">pending listings</span>
+                                    </span>
+                                <?php endif; ?>
+                            </a>
                         <?php endif; ?>
                         <?php if ($isAdmin): ?>
-                            <a class="btn btn-danger btn-sm" href="/pages/admin/dashboard.php">Admin</a>
+                            <a class="btn btn-danger btn-sm" href="<?= base_url('/pages/admin/dashboard.php') ?>">Admin</a>
                         <?php endif; ?>
                         
                         <!-- Notifications -->
                         <div class="position-relative">
-                            <a class="btn btn-outline-light btn-sm" href="/pages/notifications.php">
+                            <a class="btn btn-outline-light btn-sm" href="<?= base_url('/pages/notifications.php') ?>">
                                 🔔
                                 <?php if ($unreadNotifications > 0): ?>
                                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">
@@ -85,20 +104,20 @@ if ($isLoggedIn && isset($_SESSION['user_id'])) {
                                 <?php echo cleanInput($currentUser ?? 'User'); ?>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item" href="/pages/profile.php">My Profile</a></li>
-                                <li><a class="dropdown-item" href="/pages/my-bids.php">My Bids</a></li>
-                                <li><a class="dropdown-item" href="/pages/messages.php">Messages</a></li>
-                                <li><a class="dropdown-item" href="/pages/saved-items.php">Saved Items</a></li>
-                                <li><a class="dropdown-item" href="/pages/notifications.php">Notifications</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('/pages/profile.php') ?>">My Profile</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('/pages/my-bids.php') ?>">My Bids</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('/pages/messages.php') ?>">Messages</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('/pages/saved-items.php') ?>">Saved Items</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('/pages/notifications.php') ?>">Notifications</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-danger" href="/pages/create-complaint.php">Report Issue</a></li>
+                                <li><a class="dropdown-item text-danger" href="<?= base_url('/pages/create-complaint.php') ?>">Report Issue</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="/logout.php">Logout</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('/logout.php') ?>">Logout</a></li>
                             </ul>
                         </div>
                     <?php else: ?>
-                        <a class="btn btn-outline-light btn-sm" href="/pages/login.php">Login</a>
-                        <a class="btn btn-warning btn-sm" href="/pages/register.php">Register</a>
+                        <a class="btn btn-outline-light btn-sm" href="<?= base_url('/pages/login.php') ?>">Login</a>
+                        <a class="btn btn-warning btn-sm" href="<?= base_url('/pages/register.php') ?>">Register</a>
                     <?php endif; ?>
                 </div>
             </div>

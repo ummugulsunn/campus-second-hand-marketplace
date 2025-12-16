@@ -1,3 +1,13 @@
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="position-fixed top-0 start-0 w-100 h-100 d-none" style="background: rgba(0,0,0,0.5); z-index: 10000;">
+        <div class="position-absolute top-50 start-50 translate-middle text-center">
+            <div class="spinner-border text-light" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="text-white mt-3">Loading...</p>
+        </div>
+    </div>
+
     <!-- Toast Container for Notifications -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11000;">
         <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
@@ -29,20 +39,20 @@
                 <div class="col-md-4 mb-3 mb-md-0">
                     <h6 class="text-white mb-3">Quick Links</h6>
                     <ul class="list-unstyled">
-                        <li><a href="/" class="text-white-50 text-decoration-none small">Home</a></li>
-                        <li><a href="/pages/listings.php" class="text-white-50 text-decoration-none small">Browse Listings</a></li>
+                        <li><a href="/campus-marketplace/" class="text-white-50 text-decoration-none small">Home</a></li>
+                        <li><a href="<?= base_url('/pages/listings.php') ?>" class="text-white-50 text-decoration-none small">Browse Listings</a></li>
                         <?php if (isset($isLoggedIn) && $isLoggedIn): ?>
-                            <li><a href="/pages/profile.php" class="text-white-50 text-decoration-none small">My Profile</a></li>
+                            <li><a href="<?= base_url('/pages/profile.php') ?>" class="text-white-50 text-decoration-none small">My Profile</a></li>
                         <?php else: ?>
-                            <li><a href="/pages/login.php" class="text-white-50 text-decoration-none small">Login</a></li>
-                            <li><a href="/pages/register.php" class="text-white-50 text-decoration-none small">Register</a></li>
+                            <li><a href="<?= base_url('/pages/login.php') ?>" class="text-white-50 text-decoration-none small">Login</a></li>
+                            <li><a href="<?= base_url('/pages/register.php') ?>" class="text-white-50 text-decoration-none small">Register</a></li>
                         <?php endif; ?>
                     </ul>
                 </div>
                 <div class="col-md-4">
                     <h6 class="text-white mb-3">Support</h6>
                     <ul class="list-unstyled">
-                        <li><a href="/pages/create-complaint.php" class="text-white-50 text-decoration-none small">Report Issue</a></li>
+                        <li><a href="<?= base_url('/pages/create-complaint.php') ?>" class="text-white-50 text-decoration-none small">Report Issue</a></li>
                         <li><a href="#" class="text-white-50 text-decoration-none small">Terms of Service</a></li>
                         <li><a href="#" class="text-white-50 text-decoration-none small">Privacy Policy</a></li>
                     </ul>
@@ -74,6 +84,28 @@
                 toast.show();
             }
         }
+        
+        // ========== LOADING OVERLAY ==========
+        function showLoading() {
+            document.getElementById('loadingOverlay')?.classList.remove('d-none');
+        }
+        
+        function hideLoading() {
+            document.getElementById('loadingOverlay')?.classList.add('d-none');
+        }
+        
+        // Show loading on form submit
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                // Don't show loading for search forms
+                if (!this.classList.contains('no-loading')) {
+                    showLoading();
+                }
+            });
+        });
+        
+        // Hide loading on page load
+        window.addEventListener('load', hideLoading);
         
         // ========== SMOOTH SCROLL ==========
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

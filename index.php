@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/includes/category-helpers.php';
 
 startSession();
 
@@ -84,8 +85,8 @@ require_once __DIR__ . '/includes/header.php';
                     student-focused experience on top of the approved campus_marketplace schema.
                 </p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a class="btn btn-light btn-lg" href="/pages/register.php">Start Selling</a>
-                    <a class="btn btn-outline-light btn-lg" href="/pages/listings.php">Browse Listings</a>
+                    <a class="btn btn-light btn-lg" href="<?= base_url('/pages/register.php') ?>">Start Selling</a>
+                    <a class="btn btn-outline-light btn-lg" href="<?= base_url('/pages/listings.php') ?>">Browse Listings</a>
                 </div>
             </div>
             <div class="col-lg-5 d-none d-lg-block text-end">
@@ -135,22 +136,26 @@ require_once __DIR__ . '/includes/header.php';
         <section class="mb-5">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h3 class="section-heading mb-0">🔥 Latest Listings</h3>
-                <a href="/pages/listings.php" class="btn btn-outline-primary btn-sm">View All →</a>
+                <a href="<?= base_url('/pages/listings.php') ?>" class="btn btn-outline-primary btn-sm">View All →</a>
             </div>
             <div class="row row-cols-1 row-cols-md-3 row-cols-lg-6 g-3">
                 <?php foreach ($featuredListings as $listing): ?>
                     <div class="col">
                         <div class="card h-100 shadow-sm listing-card">
+                            <!-- Category Icon Header -->
+                            <div class="text-center py-4" style="background: <?= getCategoryGradient($listing['CategoryName']) ?>; border-radius: 0.375rem 0.375rem 0 0;">
+                                <span style="font-size: 3rem;"><?= getCategoryEmoji($listing['CategoryName']) ?></span>
+                            </div>
                             <div class="card-body p-3">
-                                <span class="badge bg-secondary mb-2 small">
-                                    <?php echo htmlspecialchars($listing['CategoryName'], ENT_QUOTES, 'UTF-8'); ?>
+                                <span class="badge bg-<?= getCategoryColor($listing['CategoryName']) ?> mb-2 small">
+                                    <?= getCategoryEmoji($listing['CategoryName']) ?> <?php echo htmlspecialchars($listing['CategoryName'], ENT_QUOTES, 'UTF-8'); ?>
                                 </span>
                                 <h6 class="card-title mb-2">
                                     <?php echo htmlspecialchars(strlen($listing['Title']) > 30 ? substr($listing['Title'], 0, 30) . '...' : $listing['Title'], ENT_QUOTES, 'UTF-8'); ?>
                                 </h6>
                                 <p class="h6 text-primary mb-2">₺<?php echo number_format((float)$listing['Price'], 2); ?></p>
-                                <a href="/pages/listing-detail.php?id=<?php echo $listing['ListingID']; ?>" 
-                                   class="btn btn-sm btn-outline-primary w-100">View</a>
+                                <a href="<?= base_url('/pages/listing-detail.php?id=' . $listing['ListingID']) ?>" 
+                                   class="btn btn-sm btn-outline-primary w-100">View Details →</a>
                             </div>
                         </div>
                     </div>

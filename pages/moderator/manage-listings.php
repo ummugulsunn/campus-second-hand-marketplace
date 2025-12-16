@@ -9,7 +9,7 @@ requireLogin();
 
 // Only Moderators and Admins can access
 if (!hasRole('Moderator') && !hasRole('Admin')) {
-    header('Location: /index.php');
+    header('Location: /campus-marketplace/index.php');
     exit;
 }
 
@@ -43,6 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['listing_id'], $_POST[
 }
 
 try {
+    // Get pending listing count
+    $pendingCountSql = "SELECT COUNT(*) FROM Product_Listing WHERE Status = 'Pending'";
+    $pendingCount = (int)$pdo->query($pendingCountSql)->fetchColumn();
+    
     // Fetch all listings with user and category info
     $listingsSql = <<<SQL
     SELECT 
@@ -75,7 +79,21 @@ require_once __DIR__ . '/../../includes/header.php';
 ?>
 
 <main class="container py-5">
-    <h2 class="mb-4">Manage Listings</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-2">📋 Manage & Approve Listings</h2>
+            <p class="text-muted mb-0">
+                Review and approve/reject pending listings. Change status to <strong>Active</strong> to approve, or <strong>Removed</strong> to reject.
+            </p>
+        </div>
+        <?php if (isset($pendingCount) && $pendingCount > 0): ?>
+            <div class="text-end">
+                <span class="badge bg-warning text-dark fs-5 p-3">
+                    ⏳ <?= $pendingCount ?> Pending Approval
+                </span>
+            </div>
+        <?php endif; ?>
+    </div>
 
     <?php if ($errorMessage !== ''): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -123,7 +141,7 @@ require_once __DIR__ . '/../../includes/header.php';
                         <tr>
                             <td><?php echo $listing['ListingID']; ?></td>
                             <td>
-                                <a href="/pages/listing-detail.php?id=<?php echo $listing['ListingID']; ?>" target="_blank">
+                                <a href="/campus-marketplace/pages/listing-detail.php?id=<?php echo $listing['ListingID']; ?>" target="_blank">
                                     <?php echo htmlspecialchars($listing['Title'], ENT_QUOTES, 'UTF-8'); ?>
                                 </a>
                             </td>

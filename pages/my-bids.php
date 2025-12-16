@@ -56,7 +56,7 @@ require_once __DIR__ . '/../includes/header.php';
             <div class="empty-state-icon">💰</div>
             <h4>No Bids Yet</h4>
             <p>You haven't placed any bids yet. Browse listings and make your first offer!</p>
-            <a href="/pages/listings.php" class="btn btn-primary">Browse Listings</a>
+            <a href="/campus-marketplace/pages/listings.php" class="btn btn-primary">Browse Listings</a>
         </div>
     <?php else: ?>
         <div class="table-responsive">
@@ -103,7 +103,7 @@ require_once __DIR__ . '/../includes/header.php';
                             </td>
                             <td><?php echo date('M d, Y H:i', strtotime($bid['BidDate'])); ?></td>
                             <td>
-                                <a href="/pages/listing-detail.php?id=<?php echo $bid['ListingID']; ?>" 
+                                <a href="/campus-marketplace/pages/listing-detail.php?id=<?php echo $bid['ListingID']; ?>" 
                                    class="btn btn-sm btn-outline-primary">View</a>
                             </td>
                         </tr>

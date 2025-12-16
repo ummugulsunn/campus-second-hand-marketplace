@@ -51,7 +51,7 @@ require_once __DIR__ . '/../includes/header.php';
 <main class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>My Messages</h2>
-        <a href="/pages/send-message.php" class="btn btn-primary">+ New Message</a>
+        <a href="/campus-marketplace/pages/send-message.php" class="btn btn-primary">+ New Message</a>
     </div>
 
     <?php if ($successMessage !== ''): ?>
@@ -75,7 +75,7 @@ require_once __DIR__ . '/../includes/header.php';
             <div class="empty-state-icon">💬</div>
             <h4>No Messages Yet</h4>
             <p>Start a conversation with sellers to negotiate prices and arrange meetups!</p>
-            <a href="/pages/listings.php" class="btn btn-primary">Browse Listings</a>
+            <a href="/campus-marketplace/pages/listings.php" class="btn btn-primary">Browse Listings</a>
         </div>
     <?php else: ?>
         <div class="list-group">
@@ -100,7 +100,7 @@ require_once __DIR__ . '/../includes/header.php';
                     </div>
                     <p class="mb-2"><?php echo nl2br(htmlspecialchars($msg['MessageText'], ENT_QUOTES, 'UTF-8')); ?></p>
                     <?php if (!$isSender): ?>
-                        <a href="/pages/send-message.php?to=<?php echo $otherUserId; ?>" class="btn btn-sm btn-outline-primary">Reply</a>
+                        <a href="/campus-marketplace/pages/send-message.php?to=<?php echo $otherUserId; ?>" class="btn btn-sm btn-outline-primary">Reply</a>
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>

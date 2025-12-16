@@ -14,7 +14,7 @@ $errors = [];
 $successMessage = '';
 
 if ($listingId <= 0) {
-    header('Location: /pages/listings.php');
+    header('Location: /campus-marketplace/pages/listings.php');
     exit;
 }
 
@@ -38,7 +38,7 @@ try {
     $listing = $listingStmt->fetch();
 
     if (!$listing) {
-        header('Location: /pages/listings.php');
+        header('Location: /campus-marketplace/pages/listings.php');
         exit;
     }
 
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errors)) {
             $insertBidStmt->execute();
 
             $_SESSION['success_message'] = 'Bid placed successfully!';
-            header('Location: /pages/listing-detail.php?id=' . $listingId);
+            header('Location: /campus-marketplace/pages/listing-detail.php?id=' . $listingId);
             exit;
         } catch (PDOException $e) {
             $errors[] = 'Failed to place bid: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
@@ -157,27 +157,31 @@ require_once __DIR__ . '/../includes/header.php';
                         </div>
 
                         <?php if (empty($errors) || !in_array('You cannot bid on your own listing.', $errors)): ?>
-                            <form method="post" action="/pages/place-bid.php?listing_id=<?php echo $listingId; ?>" novalidate>
+                            <form method="post" action="<?= base_url('/pages/place-bid.php?listing_id=' . $listingId) ?>" novalidate>
                                 <div class="mb-3">
                                     <label for="bid_amount" class="form-label">
                                         Your Bid (TL) <span class="text-danger">*</span>
                                     </label>
-                                    <input type="number" step="0.01" class="form-control" id="bid_amount" 
-                                           name="bid_amount" required
-                                           placeholder="Enter amount higher than current bid"
-                                           value="<?php echo isset($bidAmount) ? htmlspecialchars($bidAmount, ENT_QUOTES, 'UTF-8') : ''; ?>">
+                                    <div class="input-group">
+                                        <span class="input-group-text">₺</span>
+                                        <input type="number" step="0.01" class="form-control" id="bid_amount" 
+                                               name="bid_amount" required
+                                               min="<?php echo number_format((float)($highestBid !== null ? $highestBid + 0.01 : $listing['Price']), 2, '.', ''); ?>"
+                                               placeholder="Enter amount higher than current bid"
+                                               value="<?php echo isset($bidAmount) ? htmlspecialchars($bidAmount, ENT_QUOTES, 'UTF-8') : ''; ?>">
+                                    </div>
                                     <small class="form-text text-muted">
-                                        Minimum bid: ₺<?php echo number_format((float)($highestBid !== null ? $highestBid + 0.01 : $listing['Price']), 2); ?>
+                                        💡 Minimum bid: ₺<?php echo number_format((float)($highestBid !== null ? $highestBid + 0.01 : $listing['Price']), 2); ?>
                                     </small>
                                 </div>
 
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <a href="/pages/listing-detail.php?id=<?php echo $listingId; ?>" class="btn btn-secondary">Cancel</a>
+                                    <a href="/campus-marketplace/pages/listing-detail.php?id=<?php echo $listingId; ?>" class="btn btn-secondary">Cancel</a>
                                     <button type="submit" class="btn btn-primary">Place Bid</button>
                                 </div>
                             </form>
                         <?php else: ?>
-                            <a href="/pages/listing-detail.php?id=<?php echo $listingId; ?>" class="btn btn-secondary">Back to Listing</a>
+                            <a href="/campus-marketplace/pages/listing-detail.php?id=<?php echo $listingId; ?>" class="btn btn-secondary">Back to Listing</a>
                         <?php endif; ?>
                     <?php endif; ?>
                 </div>

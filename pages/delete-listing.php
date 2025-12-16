@@ -59,6 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['listing_id'])) {
     }
 }
 
-header('Location: /pages/profile.php');
+header('Location: /campus-marketplace/pages/profile.php');
 exit;
 

@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $insertStmt->execute();
 
                     $successMessage = 'Registration successful! Redirecting to login...';
-                    header('Refresh: 2; URL=/pages/login.php');
+                    header('Refresh: 2; URL=/campus-marketplace/pages/login.php');
                 }
             }
         } catch (PDOException $e) {
@@ -114,7 +114,7 @@ require_once __DIR__ . '/../includes/header.php';
                         </script>
                     <?php endif; ?>
 
-                    <form method="post" action="/pages/register.php" class="needs-validation" novalidate>
+                    <form method="post" action="<?= base_url('/pages/register.php') ?>" class="needs-validation" novalidate>
                         <div class="mb-3">
                             <label for="name" class="form-label">Full Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="name" name="name" required minlength="3" maxlength="100" 
@@ -159,7 +159,7 @@ require_once __DIR__ . '/../includes/header.php';
                     </form>
 
                     <p class="mt-3 text-center">
-                        Already have an account? <a href="/pages/login.php">Login here</a>.
+                        Already have an account? <a href="/campus-marketplace/pages/login.php">Login here</a>.
                     </p>
                 </div>
             </div>

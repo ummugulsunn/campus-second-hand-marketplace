@@ -134,7 +134,7 @@ require_once __DIR__ . '/../includes/header.php';
     <!-- Breadcrumbs -->
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/campus-marketplace/">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">Browse Listings</li>
         </ol>
     </nav>
@@ -154,14 +154,14 @@ require_once __DIR__ . '/../includes/header.php';
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Browse Listings</h2>
         <?php if (isLoggedIn() && hasRole('Student')): ?>
-            <a href="/pages/add-listing.php" class="btn btn-primary">+ Add Listing</a>
+            <a href="/campus-marketplace/pages/add-listing.php" class="btn btn-primary">+ Add Listing</a>
         <?php endif; ?>
     </div>
 
     <!-- Search and Filter Form -->
     <div class="card mb-4">
         <div class="card-body">
-            <form method="get" action="/pages/listings.php" class="row g-3">
+            <form method="get" action="<?= base_url('/pages/listings.php') ?>" class="row g-3">
                 <!-- Search -->
                 <div class="col-md-4">
                     <label class="form-label small">Search</label>
@@ -213,7 +213,7 @@ require_once __DIR__ . '/../includes/header.php';
                 </div>
                 <div class="col-md-2">
                     <label class="form-label small d-block">&nbsp;</label>
-                    <a href="/pages/listings.php" class="btn btn-outline-secondary w-100">Clear</a>
+                    <a href="/campus-marketplace/pages/listings.php" class="btn btn-outline-secondary w-100">Clear</a>
                 </div>
             </form>
         </div>
@@ -235,9 +235,9 @@ require_once __DIR__ . '/../includes/header.php';
             <h4>No Listings Found</h4>
             <p>We couldn't find any items matching your search criteria. Try adjusting your filters or browse all categories.</p>
             <?php if (isLoggedIn() && hasRole('Student')): ?>
-                <a href="/pages/add-listing.php" class="btn btn-primary">Create Your First Listing</a>
+                <a href="/campus-marketplace/pages/add-listing.php" class="btn btn-primary">Create Your First Listing</a>
             <?php else: ?>
-                <a href="/pages/listings.php" class="btn btn-outline-primary">Clear Filters</a>
+                <a href="/campus-marketplace/pages/listings.php" class="btn btn-outline-primary">Clear Filters</a>
             <?php endif; ?>
         </div>
     <?php else: ?>
@@ -279,7 +279,7 @@ require_once __DIR__ . '/../includes/header.php';
                                 <span class="h5 mb-0 text-primary">
                                     ₺<?php echo number_format((float)$listing['Price'], 2); ?>
                                 </span>
-                                <a href="/pages/listing-detail.php?id=<?php echo $listing['ListingID']; ?>" 
+                                <a href="/campus-marketplace/pages/listing-detail.php?id=<?php echo $listing['ListingID']; ?>" 
                                    class="btn btn-sm btn-outline-primary">View</a>
                             </div>
                             <p class="text-muted small mb-0 mt-2">

@@ -9,7 +9,7 @@ requireLogin();
 
 // Only Admins can access
 if (!hasRole('Admin')) {
-    header('Location: /index.php');
+    header('Location: /campus-marketplace/index.php');
     exit;
 }
 
@@ -20,7 +20,7 @@ $recentActivity = [];
 $errorMessage = '';
 
 if ($userId <= 0) {
-    header('Location: /pages/admin/users.php');
+    header('Location: /campus-marketplace/pages/admin/users.php');
     exit;
 }
 
@@ -46,7 +46,7 @@ try {
     $user = $userStmt->fetch();
     
     if (!$user) {
-        header('Location: /pages/admin/users.php');
+        header('Location: /campus-marketplace/pages/admin/users.php');
         exit;
     }
     
@@ -170,7 +170,7 @@ require_once __DIR__ . '/../../includes/header.php';
 <main class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>User Details</h2>
-        <a href="/pages/admin/users.php" class="btn btn-outline-secondary">← Back to Users</a>
+        <a href="/campus-marketplace/pages/admin/users.php" class="btn btn-outline-secondary">← Back to Users</a>
     </div>
 
     <?php if ($errorMessage !== ''): ?>
@@ -304,7 +304,7 @@ require_once __DIR__ . '/../../includes/header.php';
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    <a href="/pages/listing-detail.php?id=<?php echo $listing['ListingID']; ?>" 
+                                                    <a href="/campus-marketplace/pages/listing-detail.php?id=<?php echo $listing['ListingID']; ?>" 
                                                        class="btn btn-sm btn-outline-primary" target="_blank">View</a>
                                                 </td>
                                             </tr>
@@ -386,8 +386,8 @@ require_once __DIR__ . '/../../includes/header.php';
             <div class="card-body">
                 <h5 class="card-title">Admin Actions</h5>
                 <div class="d-flex gap-2">
-                    <a href="/pages/admin/users.php" class="btn btn-primary">Change Role</a>
-                    <a href="/pages/send-message.php?to=<?php echo $userId; ?>" class="btn btn-outline-primary">Send Message</a>
+                    <a href="/campus-marketplace/pages/admin/users.php" class="btn btn-primary">Change Role</a>
+                    <a href="/campus-marketplace/pages/send-message.php?to=<?php echo $userId; ?>" class="btn btn-outline-primary">Send Message</a>
                 </div>
             </div>
         </div>

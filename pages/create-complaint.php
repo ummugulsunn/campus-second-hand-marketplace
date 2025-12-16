@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $insertComplaintStmt->execute();
 
             $_SESSION['success_message'] = 'Complaint submitted successfully! Our moderators will review it soon.';
-            header('Location: /pages/listings.php');
+            header('Location: /campus-marketplace/pages/listings.php');
             exit;
         } catch (PDOException $e) {
             $errors[] = 'Failed to submit complaint: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
@@ -80,7 +80,7 @@ require_once __DIR__ . '/../includes/header.php';
                     <?php endif; ?>
 
                     <?php if (empty($successMessage)): ?>
-                        <form method="post" action="/pages/create-complaint.php" novalidate>
+                        <form method="post" action="<?= base_url('/pages/create-complaint.php') ?>" novalidate>
                             <div class="mb-3">
                                 <label for="reason" class="form-label">Reason for Complaint <span class="text-danger">*</span></label>
                                 <textarea class="form-control" id="reason" name="reason" rows="6" required
@@ -96,7 +96,7 @@ require_once __DIR__ . '/../includes/header.php';
                             </div>
 
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a href="/pages/listings.php" class="btn btn-secondary">Cancel</a>
+                                <a href="/campus-marketplace/pages/listings.php" class="btn btn-secondary">Cancel</a>
                                 <button type="submit" class="btn btn-danger">Submit Complaint</button>
                             </div>
                         </form>

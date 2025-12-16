@@ -52,6 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Redirect back to listing detail
 $redirectId = $listingId ?? 0;
-header('Location: /pages/listing-detail.php?id=' . $redirectId);
+header('Location: /campus-marketplace/pages/listing-detail.php?id=' . $redirectId);
 exit;
 

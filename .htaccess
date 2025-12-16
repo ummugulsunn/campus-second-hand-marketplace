@@ -1,0 +1,12 @@
+# Set the base path for the application
+RewriteEngine On
+RewriteBase /campus-marketplace/
+
+# Rewrite absolute paths to include base directory
+RewriteCond %{REQUEST_URI} !^/campus-marketplace/
+RewriteCond %{REQUEST_URI} ^/(pages|assets|logout\.php|index\.php)
+RewriteRule ^(.*)$ /campus-marketplace/$1 [L]
+
+# Set environment variable for PHP to use
+SetEnv BASE_PATH /campus-marketplace
+

@@ -9,7 +9,7 @@ requireLogin();
 
 // Only Moderators and Admins can access
 if (!hasRole('Moderator') && !hasRole('Admin')) {
-    header('Location: /index.php');
+    header('Location: /campus-marketplace/index.php');
     exit;
 }
 

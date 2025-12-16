@@ -31,7 +31,7 @@ if (isset($_SESSION['info_message'])) {
 }
 
 if ($listingId <= 0) {
-    header('Location: /pages/listings.php');
+    header('Location: /campus-marketplace/pages/listings.php');
     exit;
 }
 
@@ -62,7 +62,7 @@ try {
     $listing = $listingStmt->fetch();
 
     if (!$listing) {
-        header('Location: /pages/listings.php');
+        header('Location: /campus-marketplace/pages/listings.php');
         exit;
     }
 
@@ -212,7 +212,7 @@ require_once __DIR__ . '/../includes/header.php';
     <?php if ($listing): ?>
         <nav aria-label="breadcrumb" class="mb-3">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/pages/listings.php">Listings</a></li>
+                <li class="breadcrumb-item"><a href="/campus-marketplace/pages/listings.php">Listings</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><?php echo htmlspecialchars($listing['Title'], ENT_QUOTES, 'UTF-8'); ?></li>
             </ol>
         </nav>
@@ -284,7 +284,7 @@ require_once __DIR__ . '/../includes/header.php';
                         <?php if (isLoggedIn() && !$isOwnListing): ?>
                             <hr>
                             <?php if ($canReview): ?>
-                                <a href="/pages/leave-review.php?for=<?php echo $listing['SellerID']; ?>" class="btn btn-sm btn-outline-warning w-100">
+                                <a href="/campus-marketplace/pages/leave-review.php?for=<?php echo $listing['SellerID']; ?>" class="btn btn-sm btn-outline-warning w-100">
                                     ⭐ Leave Review for Seller
                                 </a>
                                 <small class="text-muted d-block mt-1 text-center">
@@ -306,14 +306,14 @@ require_once __DIR__ . '/../includes/header.php';
                         <div class="card-body">
                             <h5 class="card-title mb-3">Actions</h5>
                             <div class="d-grid gap-2">
-                                <a href="/pages/place-bid.php?listing_id=<?php echo $listingId; ?>" class="btn btn-primary">
+                                <a href="/campus-marketplace/pages/place-bid.php?listing_id=<?php echo $listingId; ?>" class="btn btn-primary">
                                     Place Bid
                                 </a>
-                                <a href="/pages/send-message.php?to=<?php echo $listing['SellerID']; ?>&listing_id=<?php echo $listingId; ?>" class="btn btn-outline-primary">
+                                <a href="/campus-marketplace/pages/send-message.php?to=<?php echo $listing['SellerID']; ?>&listing_id=<?php echo $listingId; ?>" class="btn btn-outline-primary">
                                     Contact Seller
                                 </a>
                                 <?php if ($isSaved): ?>
-                                    <form method="post" action="/pages/remove-saved-item.php">
+                                    <form method="post" action="<?= base_url('/pages/remove-saved-item.php') ?>">
                                         <input type="hidden" name="listing_id" value="<?php echo $listingId; ?>">
                                         <input type="hidden" name="redirect" value="detail">
                                         <button type="submit" class="btn btn-outline-secondary w-100">
@@ -321,7 +321,7 @@ require_once __DIR__ . '/../includes/header.php';
                                         </button>
                                     </form>
                                 <?php else: ?>
-                                    <form method="post" action="/pages/save-item.php">
+                                    <form method="post" action="<?= base_url('/pages/save-item.php') ?>">
                                         <input type="hidden" name="listing_id" value="<?php echo $listingId; ?>">
                                         <button type="submit" class="btn btn-outline-secondary w-100">
                                             🤍 Save to Wishlist
@@ -337,7 +337,7 @@ require_once __DIR__ . '/../includes/header.php';
                             <h5 class="card-title mb-3">Manage Listing</h5>
                             <div class="alert alert-info">This is your listing.</div>
                             <div class="d-grid gap-2">
-                                <a href="/pages/my-bids.php?listing_id=<?php echo $listingId; ?>" class="btn btn-outline-primary">
+                                <a href="/campus-marketplace/pages/my-bids.php?listing_id=<?php echo $listingId; ?>" class="btn btn-outline-primary">
                                     View Bids (<?php echo $totalBids; ?>)
                                 </a>
                             </div>
@@ -345,7 +345,7 @@ require_once __DIR__ . '/../includes/header.php';
                     </div>
                 <?php elseif (!isLoggedIn()): ?>
                     <div class="alert alert-warning">
-                        <a href="/pages/login.php">Login</a> to place bids or contact the seller.
+                        <a href="/campus-marketplace/pages/login.php">Login</a> to place bids or contact the seller.
                     </div>
                 <?php endif; ?>
             </div>
@@ -384,12 +384,12 @@ require_once __DIR__ . '/../includes/header.php';
                                             <td><?php echo date('M d, Y H:i', strtotime($bid['BidDate'])); ?></td>
                                             <td>
                                                 <?php if ($listing['Status'] === 'Active'): ?>
-                                                    <a href="/pages/accept-bid.php?bid_id=<?php echo $bid['BidID']; ?>&action=accept" 
+                                                    <a href="/campus-marketplace/pages/accept-bid.php?bid_id=<?php echo $bid['BidID']; ?>&action=accept" 
                                                        class="btn btn-sm btn-success"
                                                        onclick="return confirm('Accept this bid and mark the listing as Sold?');">
                                                         ✓ Accept
                                                     </a>
-                                                    <a href="/pages/accept-bid.php?bid_id=<?php echo $bid['BidID']; ?>&action=reject" 
+                                                    <a href="/campus-marketplace/pages/accept-bid.php?bid_id=<?php echo $bid['BidID']; ?>&action=reject" 
                                                        class="btn btn-sm btn-outline-danger"
                                                        onclick="return confirm('Reject this bid?');">
                                                         ✗ Reject

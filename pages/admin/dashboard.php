@@ -9,7 +9,7 @@ requireLogin();
 
 // Only Admins can access
 if (!hasRole('Admin')) {
-    header('Location: /index.php');
+    header('Location: /campus-marketplace/index.php');
     exit;
 }
 
@@ -90,7 +90,7 @@ require_once __DIR__ . '/../../includes/header.php';
     <!-- Breadcrumbs -->
     <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/campus-marketplace/">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">Admin Dashboard</li>
         </ol>
     </nav>
@@ -104,34 +104,38 @@ require_once __DIR__ . '/../../includes/header.php';
     <!-- Summary Cards -->
     <div class="row g-4 mb-4">
         <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h3 class="text-primary"><?php echo $stats['total_users'] ?? 0; ?></h3>
-                    <p class="text-muted mb-0">Total Users</p>
+            <div class="card shadow-sm border-0" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <div class="card-body text-center text-white">
+                    <div style="font-size: 2.5rem;">👥</div>
+                    <h2 class="text-white mb-1"><?php echo $stats['total_users'] ?? 0; ?></h2>
+                    <p class="mb-0 opacity-75">Total Users</p>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h3 class="text-success"><?php echo $stats['total_listings'] ?? 0; ?></h3>
-                    <p class="text-muted mb-0">Total Listings</p>
+            <div class="card shadow-sm border-0" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                <div class="card-body text-center text-white">
+                    <div style="font-size: 2.5rem;">📦</div>
+                    <h2 class="text-white mb-1"><?php echo $stats['total_listings'] ?? 0; ?></h2>
+                    <p class="mb-0 opacity-75">Total Listings</p>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h3 class="text-warning"><?php echo $stats['total_bids'] ?? 0; ?></h3>
-                    <p class="text-muted mb-0">Total Bids</p>
+            <div class="card shadow-sm border-0" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                <div class="card-body text-center text-white">
+                    <div style="font-size: 2.5rem;">💰</div>
+                    <h2 class="text-white mb-1"><?php echo $stats['total_bids'] ?? 0; ?></h2>
+                    <p class="mb-0 opacity-75">Total Bids</p>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h3 class="text-info"><?php echo $stats['total_messages'] ?? 0; ?></h3>
-                    <p class="text-muted mb-0">Total Messages</p>
+            <div class="card shadow-sm border-0" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                <div class="card-body text-center text-white">
+                    <div style="font-size: 2.5rem;">💬</div>
+                    <h2 class="text-white mb-1"><?php echo $stats['total_messages'] ?? 0; ?></h2>
+                    <p class="mb-0 opacity-75">Total Messages</p>
                 </div>
             </div>
         </div>
@@ -238,11 +242,11 @@ require_once __DIR__ . '/../../includes/header.php';
     <div class="mt-4">
         <h4>Quick Actions</h4>
         <div class="d-flex gap-2 flex-wrap">
-            <a href="/pages/admin/users.php" class="btn btn-primary">Manage Users</a>
-            <a href="/pages/admin/categories.php" class="btn btn-success">Manage Categories</a>
-            <a href="/pages/moderator/complaints.php" class="btn btn-warning">View Complaints</a>
-            <a href="/pages/moderator/manage-listings.php" class="btn btn-info">Manage Listings</a>
-            <a href="/pages/listings.php" class="btn btn-outline-primary">View All Listings</a>
+            <a href="/campus-marketplace/pages/admin/users.php" class="btn btn-primary">Manage Users</a>
+            <a href="/campus-marketplace/pages/admin/categories.php" class="btn btn-success">Manage Categories</a>
+            <a href="/campus-marketplace/pages/moderator/complaints.php" class="btn btn-warning">View Complaints</a>
+            <a href="/campus-marketplace/pages/moderator/manage-listings.php" class="btn btn-info">Manage Listings</a>
+            <a href="/campus-marketplace/pages/listings.php" class="btn btn-outline-primary">View All Listings</a>
         </div>
     </div>
 </main>

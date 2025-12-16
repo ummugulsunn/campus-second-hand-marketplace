@@ -22,7 +22,7 @@ function requireLogin(): void
 {
     startSession();
     if (!isLoggedIn()) {
-        header('Location: /pages/login.php');
+        header('Location: ' . base_url('/pages/login.php'));
         exit;
     }
 }

@@ -204,5 +204,32 @@ This project is developed for academic purposes as part of a Database Management
 
 ---
 
+## 📚 Kurulum ve Setup Rehberleri
+
+### 🚀 Hızlı Başlangıç:
+1. **[INSTALLATION_GUIDE.md](INSTALLATION_GUIDE.md)** - Detaylı kurulum adımları (AMPPS/XAMPP/MAMP)
+2. **[NETWORK_SETUP_GUIDE.md](NETWORK_SETUP_GUIDE.md)** - Simultane çalışma için network setup
+3. **[DEMO_CHECKLIST.md](DEMO_CHECKLIST.md)** - Demo senaryosu (10-15 dakika)
+
+### 📖 Dokümantasyon:
+- **[REQUIREMENTS_CHECKLIST.md](REQUIREMENTS_CHECKLIST.md)** - Proje gereksinimleri (100% tamamlandı)
+- **[SQL_QUERIES_REPORT.md](SQL_QUERIES_REPORT.md)** - Kritik SQL sorguları (15 SP, 7+ JOIN)
+- **[DATA_TRAFFIC_OPTIMIZATION.md](DATA_TRAFFIC_OPTIMIZATION.md)** - %93 optimizasyon raporu
+- **[FINAL_RELEASE_SUMMARY.md](FINAL_RELEASE_SUMMARY.md)** - Final release notları
+
+### 🎯 Hızlı Test:
+```bash
+# 1. AMPPS/XAMPP başlatın
+# 2. Database'i import edin (projectdb_export.sql)
+# 3. Tarayıcıda açın:
+http://localhost/campus-marketplace/
+
+# 4. Test kullanıcısı ile login:
+Email: admin@istun.edu.tr
+Password: password
+```
+
+---
+
 **Built with ❤️ for university students**
 

@@ -159,3 +159,4 @@ LIMIT 1;
 3. **htmlspecialchars():** Output escaping to prevent XSS
 4. **password_hash():** bcrypt for password storage
 
+

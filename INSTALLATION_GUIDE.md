@@ -516,3 +516,4 @@ Artık Campus Second-Hand Marketplace'i kullanmaya başlayabilirsiniz! 🎉
 **Versiyon:** 1.0.0  
 **Hazırlayan:** Ümmügülsün Türkmen (230611056)
 
+

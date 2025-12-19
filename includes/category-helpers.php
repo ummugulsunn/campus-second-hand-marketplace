@@ -35,3 +35,4 @@ function getCategoryGradient(string $categoryName): string {
 }
 
 
+

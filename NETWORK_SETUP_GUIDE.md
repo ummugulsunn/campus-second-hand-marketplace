@@ -505,3 +505,4 @@ Artık simultane çalışabilirsiniz! Demo için bol şanslar! 🚀
 **Versiyon:** 1.0.0  
 **Hazırlayan:** Ümmügülsün Türkmen (230611056)
 
+

@@ -247,3 +247,4 @@ Admin panel'de istediğin kategoriyi ekleyebilirsin:
 **Test et ve enjoy! 🚀**
 
 
+

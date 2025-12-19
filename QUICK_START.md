@@ -186,3 +186,4 @@ Farklı roller için hazır hesaplar:
 **Versiyon:** 1.0.0  
 **Tarih:** 17 Aralık 2024
 
+

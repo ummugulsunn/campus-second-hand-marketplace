@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 
@@ -102,7 +103,7 @@ require_once __DIR__ . '/../includes/header.php';
             <div class="empty-state-icon">❤️</div>
             <h4>No Saved Items</h4>
             <p>You haven't saved any items to your wishlist yet. Start exploring and save your favorites!</p>
-            <a href="/campus-marketplace/pages/listings.php" class="btn btn-primary">Browse Listings</a>
+            <a href="<?= base_url('/pages/listings.php') ?>" class="btn btn-primary">Browse Listings</a>
         </div>
     <?php else: ?>
         <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
@@ -129,7 +130,7 @@ require_once __DIR__ . '/../includes/header.php';
                                     <span class="h5 mb-0 text-primary">
                                         ₺<?php echo number_format((float)$item['Price'], 2); ?>
                                     </span>
-                                    <a href="/campus-marketplace/pages/listing-detail.php?id=<?php echo $item['ListingID']; ?>" 
+                                    <a href="<?= base_url('/pages/listing-detail.php?id=' . $item['ListingID']) ?>" 
                                        class="btn btn-sm btn-outline-primary">View</a>
                                 </div>
                                 <form method="post" action="<?= base_url('/pages/remove-saved-item.php') ?>">

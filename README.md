@@ -1,14 +1,14 @@
-# 🏫 Campus Second-Hand Marketplace
+# Campus Second-Hand Marketplace
 
-**✨ Version 1.0.0 - Production Ready** | **🎉 Final Release: 17 Aralık 2024**
+**Version 1.0.0 - Production Ready** | **Final Release: 17 Aralık 2024**
 
 A comprehensive second-hand marketplace platform designed exclusively for university students and staff. Built with Native PHP, MySQL, and Bootstrap 5.
 
-> 🚀 **Status:** Demo hazır! Tüm özellikler test edildi ve çalışıyor.  
-> 📊 **Stats:** 15 Stored Procedures, 5 Triggers, %93 Optimizasyon  
-> 🎯 **Requirements:** 100% tamamlandı
+> **Status:** Demo hazır! Tüm özellikler test edildi ve çalışıyor.  
+> **Stats:** 15 Stored Procedures, 5 Triggers, %93 Optimizasyon  
+> **Requirements:** 100% tamamlandı
 
-## 📋 Project Overview
+## Project Overview
 
 This platform allows users to:
 - **List items** for sale (textbooks, electronics, furniture, dorm equipment)
@@ -18,27 +18,27 @@ This platform allows users to:
 - **Save items** to wishlist
 - **Report issues** to moderators
 
-## 🎭 User Roles
+## User Roles
 
-### 👨‍🎓 Student
+### Student
 - Create and manage listings
 - Place bids on items
 - Send/receive messages
 - Leave reviews
 - Save items to wishlist
 
-### 👮 Moderator
+### Moderator
 - Review and manage complaints
 - Moderate listings (approve/remove)
 - Change listing statuses
 
-### 👑 Admin
+### Admin
 - Manage users and roles
 - Manage categories (CRUD)
 - View comprehensive dashboard statistics
 - Access all moderator features
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Backend:** Native PHP 8.0+
 - **Database:** MySQL (PDO with Prepared Statements)
@@ -49,7 +49,7 @@ This platform allows users to:
   - Password hashing (bcrypt)
   - Role-based access control
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 second-hand-market-place/
@@ -69,7 +69,7 @@ second-hand-market-place/
 └── index.php              # Landing page
 ```
 
-## 🚀 Setup Instructions
+## Setup Instructions
 
 ### Prerequisites
 - PHP 8.0 or higher
@@ -109,7 +109,7 @@ second-hand-market-place/
    - Register a new account (default role: Student)
    - Or use test accounts (see below)
 
-## 🧪 Test Accounts
+## Test Accounts
 
 ### Student
 - Email: `ahmet.yilmaz@istun.edu.tr`
@@ -123,31 +123,31 @@ second-hand-market-place/
 ### Admin
 - Create your own admin account or update existing user's RoleID to 3
 
-## ✨ Features
+## Features
 
 ### Core Features
-- ✅ User authentication (Register/Login/Logout)
-- ✅ Role-based access control
-- ✅ Product listings (CRUD)
-- ✅ Bidding system
-- ✅ Messaging system
-- ✅ Review system (interaction-based)
-- ✅ Saved items (wishlist)
-- ✅ Notifications
-- ✅ Complaint system
+- User authentication (Register/Login/Logout)
+- Role-based access control
+- Product listings (CRUD)
+- Bidding system
+- Messaging system
+- Review system (interaction-based)
+- Saved items (wishlist)
+- Notifications
+- Complaint system
 
 ### Advanced Features
-- ✅ Advanced filtering & sorting
-- ✅ Real-time form validation
-- ✅ Auto-save drafts
-- ✅ Interactive star rating
-- ✅ Toast notifications
-- ✅ Image placeholders
-- ✅ Loading states
-- ✅ Breadcrumb navigation
-- ✅ Back to top button
+- Advanced filtering & sorting
+- Real-time form validation
+- Auto-save drafts
+- Interactive star rating
+- Toast notifications
+- Image placeholders
+- Loading states
+- Breadcrumb navigation
+- Back to top button
 
-## 📊 Database Schema
+## Database Schema
 
 The database includes the following tables:
 - `User` - User accounts
@@ -161,7 +161,7 @@ The database includes the following tables:
 - `Notification` - System notifications
 - `Saved_Item` - Saved items (wishlist)
 
-## 🔒 Security Features
+## Security Features
 
 - **SQL Injection Protection:** All queries use PDO Prepared Statements
 - **XSS Protection:** Input sanitization with `cleanInput()`
@@ -169,11 +169,11 @@ The database includes the following tables:
 - **Session Management:** Secure session handling
 - **Role-based Access:** `hasRole()` checks on protected pages
 
-## 📝 Demo Checklist
+## Demo Checklist
 
 See `DEMO_CHECKLIST.md` for detailed demo scenarios and testing procedures.
 
-## 🎨 UI/UX Features
+## UI/UX Features
 
 - Modern, responsive design
 - Smooth animations and transitions
@@ -184,11 +184,11 @@ See `DEMO_CHECKLIST.md` for detailed demo scenarios and testing procedures.
 - Interactive star rating
 - Image placeholders
 
-## 📄 License
+## License
 
 This project is developed for academic purposes as part of a Database Management course.
 
-## 👥 Contributors
+## Contributors
 
 - Ümmügülsün Türkmen (230611056)
 - Group Members:
@@ -196,7 +196,7 @@ This project is developed for academic purposes as part of a Database Management
   - Büşra Demirel (220611029)
   - Şeyma Akın (220611012)
 
-## 📅 Project Timeline
+## Project Timeline
 
 - **Report 1:** Database schema design
 - **Final Submission:** January 4, 2026
@@ -204,20 +204,20 @@ This project is developed for academic purposes as part of a Database Management
 
 ---
 
-## 📚 Kurulum ve Setup Rehberleri
+## Kurulum ve Setup Rehberleri
 
-### 🚀 Hızlı Başlangıç:
+### Hızlı Başlangıç:
 1. **[INSTALLATION_GUIDE.md](INSTALLATION_GUIDE.md)** - Detaylı kurulum adımları (AMPPS/XAMPP/MAMP)
 2. **[NETWORK_SETUP_GUIDE.md](NETWORK_SETUP_GUIDE.md)** - Simultane çalışma için network setup
 3. **[DEMO_CHECKLIST.md](DEMO_CHECKLIST.md)** - Demo senaryosu (10-15 dakika)
 
-### 📖 Dokümantasyon:
+### Dokümantasyon:
 - **[REQUIREMENTS_CHECKLIST.md](REQUIREMENTS_CHECKLIST.md)** - Proje gereksinimleri (100% tamamlandı)
 - **[SQL_QUERIES_REPORT.md](SQL_QUERIES_REPORT.md)** - Kritik SQL sorguları (15 SP, 7+ JOIN)
 - **[DATA_TRAFFIC_OPTIMIZATION.md](DATA_TRAFFIC_OPTIMIZATION.md)** - %93 optimizasyon raporu
 - **[FINAL_RELEASE_SUMMARY.md](FINAL_RELEASE_SUMMARY.md)** - Final release notları
 
-### 🎯 Hızlı Test:
+### Hızlı Test:
 ```bash
 # 1. AMPPS/XAMPP başlatın
 # 2. Database'i import edin (projectdb_export.sql)
@@ -231,5 +231,5 @@ Password: password
 
 ---
 
-**Built with ❤️ for university students**
+**Built with care for university students**
 
